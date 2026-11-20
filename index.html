@@ -126,16 +126,20 @@
 
     // ===== ИНИЦИАЛИЗАЦИЯ =====
     window.onload = async () => {
-      tryInitFirebase();
-      currentUserName = localStorage.getItem('ih_user') || '';
-      if (currentUserName) {
-        if (fb.active) await ensureAuth();
-        showScreen('list');
-      } else {
-        showScreen('login');
-      }
-      loadDatalists();
-    };
+  tryInitFirebase();
+  currentUserName = localStorage.getItem('ih_user') || '';
+
+  // ✅ Слушатель навешиваем здесь — DOM уже готов
+  $('add-supplier')?.addEventListener('blur', updateSupplierTemplates);
+
+  if (currentUserName) {
+    if (fb.active) await ensureAuth();
+    showScreen('list');
+  } else {
+    showScreen('login');
+  }
+  loadDatalists();
+};
 
     window.login = async () => {
       const name = $('login-name').value.trim();
